@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { VideoService } from './services/VideoService'
+
 import VideoList from './components/VideoList';
 import VideoPlayer from './components/VideoPlayer';
 import VideoCinema from './components/VideoCinema'
@@ -9,14 +11,24 @@ class App extends Component {
   
   constructor(props){
     super(props);
+
+    this.selectVideo = this.selectVideo.bind(this);
+
     this.state = {
       videos: [],
-      selectedVideo: {
-        img: 'https://static.videezy.com/system/resources/thumbnails/000/021/578/small/drone-flies-away-beach-4K.jpg',
-        name: 'Away-Beach',
-        url: 'https://static.videezy.com/system/resources/previews/000/021/578/original/drone-flies-away-beach-4K.mp4'
-      }
+      selectedVideo: {}
     }
+  }
+
+  async componentDidMount() {
+    const videos = await VideoService.list();
+    this.setState({videos});
+
+    this.selectVideo(videos[1]); 
+  }
+
+  selectVideo(video) {
+    this.setState({selectedVideo: video});
   }
 
   render() {
