@@ -33,10 +33,11 @@ class App extends Component {
 
   render() {
     const { state } = this;
+
     return (
       <div className="App">
         <VideoPlayer video={ state.selectedVideo } />
-        <VideoList video={ state.videos } />
+        <VideoList videos={ state.videos } />
         <VideoCinema isActive={ false }/>
       </div>
     );
